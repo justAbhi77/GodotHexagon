@@ -1,0 +1,101 @@
+[gd_scene load_steps=27 format=3 uid="uid://deosmtlgm4d16"]
+
+[ext_resource type="Resource" uid="uid://715voxlucrkt" path="res://CustomClass/Brick.tres" id="1_edrbj"]
+[ext_resource type="Texture2D" uid="uid://7034alreoo45" path="res://Images/Tiles/Brick/Brick_1.png" id="1_ofiew"]
+[ext_resource type="Texture2D" uid="uid://uostimyr6sty" path="res://Images/Tiles/Grassland/Grassland.png" id="2_chre2"]
+[ext_resource type="Texture2D" uid="uid://cqp3m5fcy8bu8" path="res://Images/Tiles/Mountain/Mountain.png" id="3_2mxvv"]
+[ext_resource type="Texture2D" uid="uid://biemoy7p0o7nk" path="res://Images/Tiles/Brick/Brick_2.png" id="4_3421f"]
+[ext_resource type="Texture2D" uid="uid://dfn65dddpqk6s" path="res://Images/Tiles/Brick/Brick_3.png" id="5_kcrgf"]
+[ext_resource type="Texture2D" uid="uid://dk1q6co8m8ow2" path="res://Images/Tiles/Desert/Desert.png" id="6_61bj5"]
+[ext_resource type="Resource" uid="uid://copdvqgqka3j4" path="res://CustomClass/Test2.tres" id="6_el2ms"]
+[ext_resource type="Texture2D" uid="uid://02deuobrpm0l" path="res://Images/Tiles/Farm/Farm.png" id="7_k0ibx"]
+[ext_resource type="Texture2D" uid="uid://cb6lm1cmqq3aa" path="res://Images/Tiles/Forest/Forest_1.png" id="8_j7nbx"]
+[ext_resource type="Texture2D" uid="uid://ccm0qtdgapprd" path="res://Images/Tiles/Forest/Forest_2.png" id="9_8ep7d"]
+[ext_resource type="Texture2D" uid="uid://db4pql1jied5q" path="res://Images/Tiles/Forest/Forest_3.png" id="10_d801q"]
+[ext_resource type="Texture2D" uid="uid://bu8bbnlq4b8nn" path="res://Images/Tiles/Forest/Forest_4.png" id="11_78yw5"]
+[ext_resource type="Script" path="res://Scripts/tilemap.gd" id="12_7vrvo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m7aye"]
+texture = ExtResource("1_ofiew")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+0:0/0/custom_data_0 = ExtResource("1_edrbj")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr5by"]
+texture = ExtResource("2_chre2")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t35tu"]
+texture = ExtResource("3_2mxvv")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s1kx7"]
+texture = ExtResource("4_3421f")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+0:0/0/custom_data_0 = ExtResource("1_edrbj")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jxtbl"]
+texture = ExtResource("5_kcrgf")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+0:0/0/custom_data_0 = ExtResource("6_el2ms")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t4xyo"]
+texture = ExtResource("6_61bj5")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8psjx"]
+texture = ExtResource("7_k0ibx")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n07oo"]
+texture = ExtResource("8_j7nbx")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nur3p"]
+texture = ExtResource("9_8ep7d")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w7eb4"]
+texture = ExtResource("10_d801q")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0u5qu"]
+texture = ExtResource("11_78yw5")
+texture_region_size = Vector2i(120, 140)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kpmoj"]
+tile_shape = 3
+tile_size = Vector2i(120, 140)
+custom_data_layer_0/name = "CustomClass"
+custom_data_layer_0/type = 24
+custom_data_layer_1/name = "LocalData"
+custom_data_layer_1/type = 24
+sources/1 = SubResource("TileSetAtlasSource_m7aye")
+sources/2 = SubResource("TileSetAtlasSource_s1kx7")
+sources/3 = SubResource("TileSetAtlasSource_jxtbl")
+sources/4 = SubResource("TileSetAtlasSource_t4xyo")
+sources/5 = SubResource("TileSetAtlasSource_8psjx")
+sources/6 = SubResource("TileSetAtlasSource_n07oo")
+sources/7 = SubResource("TileSetAtlasSource_nur3p")
+sources/8 = SubResource("TileSetAtlasSource_w7eb4")
+sources/9 = SubResource("TileSetAtlasSource_0u5qu")
+sources/10 = SubResource("TileSetAtlasSource_fr5by")
+sources/11 = SubResource("TileSetAtlasSource_t35tu")
+
+[node name="World" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_kpmoj")
+format = 2
+layer_0/tile_data = PackedInt32Array(65536, 1, 0, 65537, 2, 0, 65538, 3, 0)
+script = ExtResource("12_7vrvo")

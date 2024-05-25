@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="testdataClass" load_steps=2 format=3 uid="uid://copdvqgqka3j4"]
+
+[ext_resource type="Script" path="res://Scripts/new_script.gd" id="1_empwr"]
+
+[resource]
+script = ExtResource("1_empwr")
+vartestdata = 5
+testsmth = Vector2(-79, 82)

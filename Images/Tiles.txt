@@ -1,0 +1,7 @@
+TileName -> Qt. -> Resource
+Desert -> 1 -> NIL
+Brick -> 3 -> Bricks
+Forest -> 4 -> Wood
+Mountains -> 3 -> Ore/Stone
+Farm -> 4 -> Wheat
+GrassLand -> 4 -> Sheep
