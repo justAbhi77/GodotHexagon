@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://ccm0qtdgapprd" path="res://Images/Tiles/Forest/Forest_2.png" id="9_8ep7d"]
 [ext_resource type="Texture2D" uid="uid://db4pql1jied5q" path="res://Images/Tiles/Forest/Forest_3.png" id="10_d801q"]
 [ext_resource type="Texture2D" uid="uid://bu8bbnlq4b8nn" path="res://Images/Tiles/Forest/Forest_4.png" id="11_78yw5"]
-[ext_resource type="Script" path="res://Scenes/UI.gd" id="15_4ydss"]
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="15_4ydss"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m7aye"]
 texture = ExtResource("1_ofiew")

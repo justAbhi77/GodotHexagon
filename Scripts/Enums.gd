@@ -6,8 +6,7 @@ enum TileType {
 	Forest, 
 	Mountains, 
 	Farm, 
-	GrassLand, 
-	MaxDefault
+	GrassLand
 }
 
 enum TileResources { NIL, Bricks, Wood, Stone, Wheat, Sheep}
