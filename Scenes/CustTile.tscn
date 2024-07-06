@@ -10,26 +10,134 @@ script = ExtResource("1_clnbo")
 position = Vector2(60, 70)
 texture = ExtResource("1_dam02")
 
-[node name="Edge1" type="Button" parent="Sprite2D"]
-z_index = 1
-offset_left = 2.0
-offset_top = -75.0
-offset_right = 72.0
-offset_bottom = -65.0
-rotation = 0.523599
+[node name="Edges" type="Node2D" parent="Sprite2D"]
 
-[node name="Edge3" type="Button" parent="Sprite2D"]
-z_index = 1
-offset_left = 63.0
-offset_top = 40.0
-offset_right = 133.0
-offset_bottom = 50.0
-rotation = 2.61799
+[node name="Pivot1" type="Node2D" parent="Sprite2D/Edges"]
+rotation = 2.0944
 
-[node name="Edge5" type="Button" parent="Sprite2D"]
+[node name="Edge1" type="Button" parent="Sprite2D/Edges/Pivot1"]
 z_index = 1
 offset_left = -55.0
-offset_top = -35.0
-offset_right = 15.0
-offset_bottom = -25.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -15.0
 rotation = 1.5708
+mouse_filter = 1
+
+[node name="Edge4" type="Button" parent="Sprite2D/Edges/Pivot1"]
+z_index = 1
+offset_left = 65.0
+offset_top = -25.0
+offset_right = 115.0
+offset_bottom = -15.0
+rotation = 1.5708
+mouse_filter = 1
+
+[node name="Pivot2" type="Node2D" parent="Sprite2D/Edges"]
+
+[node name="Edge2" type="Button" parent="Sprite2D/Edges/Pivot2"]
+z_index = 1
+offset_left = 65.0
+offset_top = -25.0
+offset_right = 115.0
+offset_bottom = -15.0
+rotation = 1.5708
+mouse_filter = 1
+
+[node name="Edge5" type="Button" parent="Sprite2D/Edges/Pivot2"]
+z_index = 1
+offset_left = -55.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -15.0
+rotation = 1.5708
+mouse_filter = 1
+
+[node name="Pivot3" type="Node2D" parent="Sprite2D/Edges"]
+rotation = 1.0472
+
+[node name="Edge3" type="Button" parent="Sprite2D/Edges/Pivot3"]
+z_index = 1
+offset_left = 65.0
+offset_top = -25.0
+offset_right = 115.0
+offset_bottom = -15.0
+rotation = 1.5708
+mouse_filter = 1
+
+[node name="Edge6" type="Button" parent="Sprite2D/Edges/Pivot3"]
+z_index = 1
+offset_left = -55.0
+offset_top = -25.0
+offset_right = -5.0
+offset_bottom = -15.0
+rotation = 1.5708
+mouse_filter = 1
+
+[node name="Vertices" type="Node2D" parent="Sprite2D"]
+
+[node name="Pivot1" type="Node2D" parent="Sprite2D/Vertices"]
+
+[node name="Vertex1" type="Button" parent="Sprite2D/Vertices/Pivot1"]
+offset_left = -7.5
+offset_top = -77.5
+offset_right = 7.5
+offset_bottom = -62.5
+
+[node name="Vertex4" type="Button" parent="Sprite2D/Vertices/Pivot1"]
+offset_left = -7.5
+offset_top = 62.5
+offset_right = 7.5
+offset_bottom = 77.5
+
+[node name="Pivot2" type="Node2D" parent="Sprite2D/Vertices"]
+rotation = 1.0472
+
+[node name="Vertex2" type="Button" parent="Sprite2D/Vertices/Pivot2"]
+offset_left = -7.5
+offset_top = -77.5
+offset_right = 7.5
+offset_bottom = -62.5
+metadata/_edit_use_anchors_ = true
+
+[node name="Vertex5" type="Button" parent="Sprite2D/Vertices/Pivot2"]
+offset_left = -7.5
+offset_top = 62.5
+offset_right = 7.5
+offset_bottom = 77.5
+metadata/_edit_use_anchors_ = true
+
+[node name="Pivot3" type="Node2D" parent="Sprite2D/Vertices"]
+rotation = 2.0944
+
+[node name="Vertex3" type="Button" parent="Sprite2D/Vertices/Pivot3"]
+offset_left = -7.5
+offset_top = -77.5
+offset_right = 7.5
+offset_bottom = -62.5
+metadata/_edit_use_anchors_ = true
+
+[node name="Vertex6" type="Button" parent="Sprite2D/Vertices/Pivot3"]
+offset_left = -7.5
+offset_top = 62.5
+offset_right = 7.5
+offset_bottom = 77.5
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="Sprite2D"]
+offset_left = -13.0
+offset_top = -55.0
+offset_right = 67.0
+offset_bottom = -24.9999
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Sprite2D"]
+offset_left = -42.0
+offset_top = -21.0
+offset_right = 38.0
+offset_bottom = 29.0
+text = "{x},{y}"
+horizontal_alignment = 1
+vertical_alignment = 1

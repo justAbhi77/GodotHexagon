@@ -14,10 +14,21 @@ class_name UI
 
 var Tiles = []
 
+var WorldTileTypes = []
+
 func _ready():
 	position = _Tilemap.position
 	
-	var EnumVal:= Enums.TileType.values()
+	var index = 0
+	for x in Enums.TileType.values():
+		print(typeof(x))
+		var countTiles = Enums.EWorldTileCount[index]
+		for y in range(countTiles):
+			WorldTileTypes.append(x)
+		index += 1
+	print(typeof(WorldTileTypes[0]))
+	WorldTileTypes.shuffle()
+	index = 0
 	
 	var grid = _Tilemap.get_used_cells(0)
 	grid.sort()
@@ -29,18 +40,19 @@ func _ready():
 		var empty = []
 		empty.resize(Maxlasttile)
 		Tiles.append(empty)
-	
+		
 	for i in grid:
 		var tile : CustTile = _TileAsset.instantiate()
 		Tiles[i.x][i.y] = tile
-		tile.name = str(i)
 		tile.tileX = i.x
 		tile.tileY = i.y
 		add_child(tile)
 		tile.position = _Tilemap.map_to_local(i)
 		tile.position -= Vector2(64,74)
-		setup_tile_properties(tile,EnumVal.pick_random())
-		tile.TileClicked.connect(On_Tile_Clicked)
+		setup_tile_properties(tile,WorldTileTypes[index])
+		index += 1
+		tile.EdgeClicked.connect(On_Edge_Clicked)
+		tile.VertexClicked.connect(On_Vertex_Clicked)
 		await get_tree().create_timer(0.05).timeout
 		
 	print("hello")
@@ -54,28 +66,85 @@ func _on_button_pressed():
 	print("Mouse Clicked on UI at pos ", pos_clicked)
 
 func setup_tile_properties(tile:CustTile ,tiletype:Enums.TileType):
+	tile.LabelText.text = str(tile.tileX, ", ",tile.tileY)
 	match tiletype:
 		Enums.TileType.Desert:
+			tile.name = "Desert"
 			tile.TileImage.set_texture(_DesertAsset)
 			tile.Resources = Enums.TileResources.NIL
 		Enums.TileType.Brick:
+			tile.name = "Brick"
 			tile.TileImage.set_texture(_BricksAsset.pick_random())
 			tile.Resources = Enums.TileResources.Bricks
 		Enums.TileType.Forest:
+			tile.name = "Forest"
 			tile.TileImage.set_texture(_ForestsAsset.pick_random())
 			tile.Resources = Enums.TileResources.Wood
 		Enums.TileType.Mountains:
+			tile.name = "Mountains"
 			tile.TileImage.set_texture(_MountainAsset)
 			tile.Resources = Enums.TileResources.Stone
 		Enums.TileType.Farm:
+			tile.name = "Farm"
 			tile.TileImage.set_texture(_FarmAsset)
 			tile.Resources = Enums.TileResources.Wheat
 		Enums.TileType.GrassLand:
+			tile.name = "GrassLand"
 			tile.TileImage.set_texture(_GrasslandAsset)
 			tile.Resources = Enums.TileResources.Sheep
 		_:
 			print("Hello Default")
 
-func On_Tile_Clicked(tileX:int, tileY:int, Edgeindex:int):
+func On_Edge_Clicked(tileX:int, tileY:int, Edgeindex:int):
 	var tile = Tiles[tileX][tileY]
-	print("Clicked on tile ", tile.name, " at edge ", Edgeindex)
+	var neighbourX = 0
+	var neighbourY = 0
+	match Edgeindex:
+		1:
+			neighbourY = tileY - 1
+			if tileY%2 == 1 :
+				neighbourX = tileX + 1
+			else:
+				neighbourX = tileX
+		2:
+			neighbourX = tileX + 1
+			neighbourY = tileY
+		3:
+			neighbourY = tileY + 1
+			if tileY%2 == 1 :
+				neighbourX = tileX + 1
+			else:
+				neighbourX = tileX
+		4:
+			neighbourY = tileY + 1
+			if tileY%2 == 1 :
+				neighbourX = tileX
+			else:
+				neighbourX = tileX - 1
+		5:
+			neighbourX = tileX - 1
+			neighbourY = tileY
+		6:
+			neighbourY = tileY - 1
+			if tileY%2 == 1 :
+				neighbourX = tileX
+			else:
+				neighbourX = tileX - 1
+		_:
+			print("Invalid EdgeIndex")
+	var neighbourtile = Tiles[neighbourX][neighbourY]
+	
+	var Debugprint : String = ""
+	Debugprint = str("Clicked on tile with ", tile.name, " property at ", 
+		tileX,", ",tileY , " at edge ", Edgeindex)
+		
+	if neighbourtile:
+		Debugprint+= str(" Found Neightbour with ", neighbourtile.name, " property at ", 
+			neighbourX,", ",neighbourY , " at edge ", (Edgeindex + 3)%6)
+	print(Debugprint)
+	
+
+func On_Vertex_Clicked(tileX:int, tileY:int, Vertexindex:int):
+	var tile = Tiles[tileX][tileY]
+	print("Clicked on tile with ", tile.name, " property at ", 
+		tileX,", ",tileY , " at Vertex ", Vertexindex)
