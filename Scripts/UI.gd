@@ -1,6 +1,4 @@
-extends Node2D
-
-class_name UI
+class_name UI extends Node2D
 
 @onready var _TileAsset: = preload("res://Scenes/CustTile.tscn")
 @onready var _DesertAsset: = preload("res://Images/Tiles/Desert/Desert.png")
@@ -9,24 +7,21 @@ class_name UI
 @onready var _MountainAsset: = preload("res://Images/Tiles/Mountain/Mountain.png")
 @onready var _FarmAsset: = preload("res://Images/Tiles/Farm/Farm.png")
 @onready var _GrasslandAsset: = preload("res://Images/Tiles/Grassland/Grassland.png")
-
 @onready var _Tilemap:TileMap = get_node("/root/World/TileMap")
 
 var Tiles = []
-
-var WorldTileTypes = []
 
 func _ready():
 	position = _Tilemap.position
 	
 	var index = 0
+	var WorldTileTypes = []
 	for x in Enums.TileType.values():
 		print(typeof(x))
 		var countTiles = Enums.EWorldTileCount[index]
 		for y in range(countTiles):
 			WorldTileTypes.append(x)
 		index += 1
-	print(typeof(WorldTileTypes[0]))
 	WorldTileTypes.shuffle()
 	index = 0
 	
@@ -148,3 +143,25 @@ func On_Vertex_Clicked(tileX:int, tileY:int, Vertexindex:int):
 	var tile = Tiles[tileX][tileY]
 	print("Clicked on tile with ", tile.name, " property at ", 
 		tileX,", ",tileY , " at Vertex ", Vertexindex)
+	
+	var neighbourL:Vector2i = Vector2i(-1,-1)
+	var neighbourR:Vector2i = Vector2i(-1,-1)
+	
+	match Vertexindex:
+		1:
+		2:
+			neighbourL.x = tileX + 1
+			neighbourL.y = tileY
+			
+			neighbourR.x = tileX + 1 if IsOdd(tileY) else tileX
+		3:
+		4:
+		5:
+		6:
+		_:
+			print("Invalid VertexIndex")
+
+func IsOdd(val:int)-> bool:
+	if val % 2 == 1:
+		return true
+	return false
