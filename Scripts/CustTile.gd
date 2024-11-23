@@ -30,9 +30,11 @@ var Quantity: int = 0
 
 @onready var TileImage = $Sprite2D
 @onready var LabelText = $Sprite2D/Label
+@onready var DiceRollText = $Sprite2D/Label2
 
 var tileX:int = -1
 var tileY:int = -1
+var DiceRollVal:int = -1
 
 func _ready():
 	Edge1.pressed.connect(_EdgePressed.bind(1))
@@ -54,3 +56,20 @@ func _EdgePressed(Edgeindex:int):
 	
 func _VertexPressed(Vertexindex:int):
 	emit_signal("VertexClicked", tileX, tileY, Vertexindex)
+	
+func _GetVertex(VertexIndex:int) -> Button:
+	match VertexIndex:
+		1:
+			return Vertex1
+		2:
+			return Vertex2
+		3:
+			return Vertex3
+		4:
+			return Vertex4
+		5:
+			return Vertex5
+		6:
+			return Vertex6
+		_:
+			return null

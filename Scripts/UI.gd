@@ -9,6 +9,8 @@ class_name UI extends Node2D
 @onready var _GrasslandAsset: = preload("res://Images/Tiles/Grassland/Grassland.png")
 @onready var _Tilemap:TileMap = get_node("/root/World/TileMap")
 
+@onready var Settlement: = preload("res://Scenes/settlement.tscn")
+
 var Tiles = []
 
 func _ready():
@@ -28,6 +30,8 @@ func _ready():
 	var grid = _Tilemap.get_used_cells(0)
 	grid.sort()
 	
+	Enums.DiceRolls.shuffle()
+	
 	var lasttile = grid[-1]
 	var Maxlasttile = max(lasttile.x,lasttile.y) + 1
 	
@@ -35,7 +39,9 @@ func _ready():
 		var empty = []
 		empty.resize(Maxlasttile)
 		Tiles.append(empty)
-		
+	
+	var DicerollIndex = 0
+	
 	for i in grid:
 		var tile : CustTile = _TileAsset.instantiate()
 		Tiles[i.x][i.y] = tile
@@ -45,6 +51,10 @@ func _ready():
 		tile.position = _Tilemap.map_to_local(i)
 		tile.position -= Vector2(64,74)
 		setup_tile_properties(tile,WorldTileTypes[index])
+		if WorldTileTypes[index] != Enums.TileType.Desert:
+			tile.DiceRollVal = Enums.DiceRolls[DicerollIndex]
+			tile.DiceRollText.text = str(tile.DiceRollVal)
+			DicerollIndex += 1
 		index += 1
 		tile.EdgeClicked.connect(On_Edge_Clicked)
 		tile.VertexClicked.connect(On_Vertex_Clicked)
@@ -141,25 +151,122 @@ func On_Edge_Clicked(tileX:int, tileY:int, Edgeindex:int):
 
 func On_Vertex_Clicked(tileX:int, tileY:int, Vertexindex:int):
 	var tile = Tiles[tileX][tileY]
-	print("Clicked on tile with ", tile.name, " property at ", 
-		tileX,", ",tileY , " at Vertex ", Vertexindex)
 	
 	var neighbourL:Vector2i = Vector2i(-1,-1)
 	var neighbourR:Vector2i = Vector2i(-1,-1)
+	var neighbourLVertex:int = -1
+	var neighbourRVertex:int = -1
 	
 	match Vertexindex:
 		1:
+			neighbourL.x = tileX
+			neighbourL.y = tileY - 1
+			
+			neighbourLVertex = 3 if IsOdd(tileY) else 5
+			neighbourRVertex = 5 if IsOdd(tileY) else 3
+			
+			neighbourR.x = (tileX + 1) if IsOdd(tileY) else (tileX - 1)
+			neighbourR.y = tileY - 1
 		2:
 			neighbourL.x = tileX + 1
 			neighbourL.y = tileY
 			
-			neighbourR.x = tileX + 1 if IsOdd(tileY) else tileX
+			neighbourLVertex = 6
+			neighbourRVertex = 4
+			
+			neighbourR.x = (tileX + 1) if IsOdd(tileY) else tileX
+			neighbourR.y = tileY - 1
 		3:
+			neighbourL.x = tileX + 1
+			neighbourL.y = tileY
+			
+			neighbourLVertex = 5
+			neighbourRVertex = 1
+			
+			neighbourR.x = (tileX + 1) if IsOdd(tileY) else tileX
+			neighbourR.y = tileY + 1
 		4:
+			neighbourL.x = tileX
+			neighbourL.y = tileY + 1
+			
+			neighbourLVertex = 2 if IsOdd(tileY) else 6
+			neighbourRVertex = 6 if IsOdd(tileY) else 2
+			
+			neighbourR.x = (tileX + 1) if IsOdd(tileY) else (tileX - 1)
+			neighbourR.y = tileY + 1
 		5:
+			neighbourL.x = tileX - 1
+			neighbourL.y = tileY
+			
+			neighbourLVertex = 3
+			neighbourRVertex = 1
+			
+			neighbourR.x = tileX if IsOdd(tileY) else (tileX - 1)
+			neighbourR.y = tileY + 1
 		6:
+			neighbourL.x = tileX - 1
+			neighbourL.y = tileY
+			
+			neighbourLVertex = 2
+			neighbourRVertex = 4
+			
+			neighbourR.x = tileX if IsOdd(tileY) else (tileX - 1)
+			neighbourR.y = tileY - 1
 		_:
 			print("Invalid VertexIndex")
+	
+	var neighbourLtile
+	var neighbourRtile
+	
+	if(neighbourL.x < 4 and neighbourL.y < 4 and neighbourL.x > -1 and neighbourL.x > -1):
+		neighbourLtile= Tiles[neighbourL.x][neighbourL.y]
+	
+	if(neighbourR.x < 4 and neighbourR.y < 4 and neighbourR.x > -1 and neighbourR.x > -1):
+		neighbourRtile = Tiles[neighbourR.x][neighbourR.y]
+	
+	var Debugprint : String = ""
+	Debugprint = str("Clicked on tile with ", tile.name, " property at ", 
+		tileX,", ",tileY , " at Vertex ", Vertexindex)
+	
+	if(neighbourLtile):
+		Debugprint+= str(" Found Neightbour with ", neighbourLtile.name, " property at ", 
+		neighbourL, " at vertex ", neighbourLVertex)
+	if(neighbourRtile):
+		Debugprint+= str(" Found Neightbour with ", neighbourRtile.name, " property at ", 
+		neighbourR, " at vertex ", neighbourRVertex)
+	
+	if neighbourLtile and neighbourRtile:
+		Debugprint += str(" dice roll values are: ",tile.DiceRollVal, " neighbourR: ", neighbourRtile.DiceRollVal,
+		" neighbourL: ", neighbourLtile.DiceRollVal)
+	
+	print(Debugprint)
+	
+	var newSettlement: = Settlement.instantiate()
+	if tile._GetVertex(Vertexindex):
+		tile._GetVertex(Vertexindex).add_child(newSettlement)
+		tile._GetVertex(Vertexindex).set_disabled(true)
+	newSettlement.set_position(Vector2())
+	
+	var Neighbour1 = tile.Resources
+	var Neighbour2 = Enums.TileResources.NIL
+	var Neighbour3 = Enums.TileResources.NIL
+
+	var Neighbour1DiceRoll: int = tile.DiceRollVal
+	var Neighbour2DiceRoll: int = 0
+	var Neighbour3DiceRoll: int = 0
+	
+	
+	if(neighbourLtile and neighbourLtile._GetVertex(neighbourLVertex)):
+		neighbourLtile._GetVertex(neighbourLVertex).set_disabled(true)
+		Neighbour2 = neighbourLtile.Resources
+		Neighbour2DiceRoll = neighbourLtile.DiceRollVal
+	if(neighbourRtile and neighbourRtile._GetVertex(neighbourRVertex)):
+		neighbourRtile._GetVertex(neighbourRVertex).set_disabled(true)
+		Neighbour3 = neighbourRtile.Resources
+		Neighbour3DiceRoll = neighbourRtile.DiceRollVal
+	
+	newSettlement._SetupData(Neighbour1, Neighbour2, Neighbour3, 
+		Neighbour1DiceRoll, Neighbour2DiceRoll, Neighbour3DiceRoll)
 
 func IsOdd(val:int)-> bool:
 	if val % 2 == 1:

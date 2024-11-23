@@ -75,6 +75,7 @@ rotation = 1.5708
 mouse_filter = 1
 
 [node name="Vertices" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, -1)
 
 [node name="Pivot1" type="Node2D" parent="Sprite2D/Vertices"]
 
@@ -125,11 +126,11 @@ offset_bottom = 77.5
 metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="Sprite2D"]
-offset_left = -13.0
-offset_top = -55.0
-offset_right = 67.0
-offset_bottom = -24.9999
-text = "1"
+offset_left = -40.0
+offset_top = -56.0
+offset_right = 40.0
+offset_bottom = -6.0
+text = "{0}"
 horizontal_alignment = 1
 vertical_alignment = 1
 

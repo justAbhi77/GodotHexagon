@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://vuc0pi4ou4sy"]
+
+[ext_resource type="Script" path="res://Scripts/Houses.gd" id="1_ing7i"]
+[ext_resource type="Texture2D" uid="uid://bagckrkp5yx40" path="res://Images/Tiles/Houses/City.png" id="1_obqpl"]
+[ext_resource type="Texture2D" uid="uid://jiljr4cps5fp" path="res://Images/Tiles/Houses/Settlement.png" id="1_ukp31"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -7.5
+offset_top = -7.5
+offset_right = 7.5
+offset_bottom = 7.5
+pivot_offset = Vector2(7.5, 7.5)
+script = ExtResource("1_ing7i")
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Settlement" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(7.5, 7.5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ukp31")
+
+[node name="City" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(7.5, 7.5)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_obqpl")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

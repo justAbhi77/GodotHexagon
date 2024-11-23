@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://isyuvqjiq8w0"]
+
+[ext_resource type="Texture2D" uid="uid://bagckrkp5yx40" path="res://Images/Tiles/Houses/City.png" id="1_w8ih6"]
+
+[node name="City" type="Sprite2D"]
+z_index = 2
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_w8ih6")
+offset = Vector2(25, 30)
